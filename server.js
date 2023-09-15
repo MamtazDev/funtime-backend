@@ -9,6 +9,7 @@ const feedbackRoutes = require("./routes/feedbackRoutes");
 const searchRoute = require("./routes/searchRoute");
 const conversationRoutes = require("./routes/conversationRoutes");
 const messageRoutes = require("./routes/messageRoutes");
+const companionRoutes = require("./routes/companionRoutes");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/api/feedback", feedbackRoutes);
 app.use("/api/search", searchRoute);
 app.use("/api/conversation", conversationRoutes);
 app.use("/api/message", messageRoutes);
+app.use("/api/companion", companionRoutes);
 
 app.get("/", (req, res) => {
   res.send("Sever is running");
