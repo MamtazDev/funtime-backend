@@ -23,7 +23,7 @@ const companionSchema = new mongoose.Schema(
       required: true,
     },
     age: {
-      type: String,
+      type: Number,
       required: true,
     },
     height: {
@@ -46,9 +46,14 @@ const companionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    cant: {
+    cant: { 
       type: String,
       required: true,
+    },
+    isOnline: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   {
