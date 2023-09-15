@@ -10,6 +10,7 @@ const searchRoute = require("./routes/searchRoute");
 const conversationRoutes = require("./routes/conversationRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const companionRoutes = require("./routes/companionRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api/search", searchRoute);
 app.use("/api/conversation", conversationRoutes);
 app.use("/api/message", messageRoutes);
 app.use("/api/companion", companionRoutes);
+app.use("/api/booking", bookingRoutes);
 
 app.get("/", (req, res) => {
   res.send("Sever is running");
