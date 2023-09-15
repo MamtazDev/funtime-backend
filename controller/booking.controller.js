@@ -25,6 +25,18 @@ const addBooking = async (req, res) => {
   }
 };
 
+const getAllBookings = async (req, res) => {
+  try {
+    const bookings = await Booking.find({}).populate("bookedCompanion");
+    res.status(200).send(bookings);
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   addBooking,
+  getAllBookings,
 };
