@@ -7,7 +7,7 @@ const registerUser = async (req, res) => {
     const isExist = await User.findOne({ email: req.body.email });
 
     if (isExist) {
-      return res.status(403).send({
+      return res.send({
         message: `${req.body.email} is already Exist!`,
         status: 403,
       });
@@ -61,7 +61,7 @@ const loginUser = async (req, res) => {
         accessTOken,
       });
     } else {
-      res.status(401).send({
+      res.send({
         message: "Invalid user or password",
         status: 401,
       });
