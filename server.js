@@ -6,8 +6,13 @@ const PORT = process.env.PORT || 8000;
 const usersRoutes = require("./routes/usersRoutes");
 const companionRoutes = require("./routes/companionRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
+const smsRoutes = require("./routes/smsRoutes");
+const bodyParser = require('body-parser');
+
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 app.use(cors());
 app.use(express.json());
@@ -18,6 +23,7 @@ connectDB();
 app.use("/api/users", usersRoutes);
 app.use("/api/companion", companionRoutes);
 app.use("/api/booking", bookingRoutes);
+app.use("/api/sms", smsRoutes);
 
 app.get("/", (req, res) => {
   res.send("Sever is running");
