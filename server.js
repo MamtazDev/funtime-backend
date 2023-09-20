@@ -12,7 +12,7 @@ const bodyParser = require("body-parser");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(cors());
+// app.use(cors());
 
 // Enable CORS for all routes
 app.use(
