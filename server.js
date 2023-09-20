@@ -17,7 +17,7 @@ app.use(cors());
 // Enable CORS for all routes
 app.use(
   cors({
-    origin: "https://yourfrontenddomain.com", // Replace with your frontend's domain
+    origin: "https://fun-time-react.vercel.app", // Replace with your frontend's domain
     methods: "GET,POST,PUT,DELETE,OPTIONS",
     allowedHeaders: "Content-Type,Authorization",
   })
