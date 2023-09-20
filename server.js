@@ -13,6 +13,16 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cors());
+
+// Enable CORS for all routes
+app.use(
+  cors({
+    origin: "https://yourfrontenddomain.com", // Replace with your frontend's domain
+    methods: "GET,POST,PUT,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type,Authorization",
+  })
+);
+
 app.use(express.json());
 
 connectDB();

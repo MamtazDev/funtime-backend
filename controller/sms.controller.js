@@ -3,7 +3,7 @@ const Booking = require("../models/booking.model");
 const Companion = require("../models/companion.model");
 
 const TWILIO_SID = "ACdb46baa1b3ba117b7b79479bdbf072e0";
-const TWILIO_AUTH_TOKEN = "c32218ea661805d8e9302b5fa3561c16";
+const TWILIO_AUTH_TOKEN = "0ee320471d7b08ada5637148f3a97c2d";
 
 // const TWILIO_SID = "AC513894f19e7c95b99b0858c81eb2d9c3";
 // const TWILIO_AUTH_TOKEN = "4c3008c9cb83ee686ecb6f2de9524a38";
