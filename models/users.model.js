@@ -38,61 +38,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
-    // image: {
-    //   type: String,
-    //   required: false,
-    //   default:
-    //     "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg",
-    // },
-
-    // postCode: {
-    //   type: Number,
-    //   required: true,
-    // },
-    // phoneNumber: {
-    //   type: String,
-    //   required: false,
-    // },
-    // residance: {
-    //   type: String,
-    //   required: true,
-    // },
-    // streetOrHouseNumber: {
-    //   type: String,
-    //   required: false,
-    // },
-    // url: {
-    //   type: String,
-    //   required: false,
-    //   default: "fkljsklfklsfkljsf",
-    // },
-
-    // availability: {
-    //   type: [String],
-    //   required: false,
-    // },
-    // offerProvide: {
-    //   type: [String],
-    //   required: false,
-    // },
-    // aboutMe: {
-    //   type: String,
-    //   required: false,
-    // },
-    // password: {
-    //   type: String,
-    //   required: true,
-    // },
-
-    // parentSearch: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    // distance: {
-    //   type: Number,
-    //   default: 0,
-    // },
   },
   {
     timestamps: true,

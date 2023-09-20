@@ -1,18 +1,16 @@
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8000;
 
 const usersRoutes = require("./routes/usersRoutes");
 const companionRoutes = require("./routes/companionRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const smsRoutes = require("./routes/smsRoutes");
-const bodyParser = require('body-parser');
-
+const bodyParser = require("body-parser");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
-
 
 app.use(cors());
 app.use(express.json());

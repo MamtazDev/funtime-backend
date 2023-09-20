@@ -27,6 +27,12 @@ const bookingSchema = new mongoose.Schema(
       ref: "Companion",
       required: true,
     },
+    status: {
+      type: String,
+      required: false,
+      default: "Pending",
+      enum: ["Pending", "Rejected", "Confirmed"],
+    },
   },
   {
     timestamps: true,
