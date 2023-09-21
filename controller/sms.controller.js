@@ -1,6 +1,7 @@
 const twilio = require("twilio");
 const Booking = require("../models/booking.model");
 const Companion = require("../models/companion.model");
+const { twilioSMSSend } = require("../utils/twiloSmsSend");
 
 const TWILIO_SID = "ACdb46baa1b3ba117b7b79479bdbf072e0";
 const TWILIO_AUTH_TOKEN = "0ee320471d7b08ada5637148f3a97c2d";
@@ -14,16 +15,31 @@ const Receiversms = async (req, res) => {
   const { message, companionNumber } = req.body;
 
   const companion = await Companion.findOne({ phone: companionNumber });
-  console.log(companion?._id);
   const booking = await Booking.findOne({ bookedCompanion: companion?._id });
-  console.log(booking);
+
+
+
   if (booking && message === "yes") {
+    const userMessage = `Request for ${companion?.name} on ${booking?.date} ${booking?.clock} ${booking?.time} at ${booking?.userPlace} room:${booking?.roomNumber} is confirmed.`
+    const adminMessage = `${booking?.userName} & ${booking?.userPhoneNumber}, has booked for ${companion?.name} on ${booking?.date} ${booking?.clock} ${booking?.time} at ${booking?.userPlace} room:${booking?.roomNumber} is confirmed.`
     booking.status = "Confirmed";
     await booking.save();
+
+    await twilioSMSSend({ number: "+8801700594282", message: userMessage })
+    await twilioSMSSend({ number: "+8801700594282", message: adminMessage })
+
     res.send("Companion agreed");
-  } else if (booking && message === "no") {
+  }
+
+  else if (booking && message === "no") {
+    const userMessage = `Request for ${companion?.name} on ${booking?.date} ${booking?.clock} ${booking?.time} at ${booking?.userPlace} room:${booking?.roomNumber} is declined.`
+    const adminMessage = `${booking?.userName} & ${booking?.userPhoneNumber}, has booked for ${companion?.name} on ${booking?.date} ${booking?.clock} ${booking?.time} at ${booking?.userPlace} room:${booking?.roomNumber} is declined.`
     booking.status = "Rejected";
     await booking.save();
+
+    await twilioSMSSend({ number: "+8801700594282", message: userMessage })
+    await twilioSMSSend({ number: "+8801700594282", message: adminMessage })
+
     res.send("Companion rejected");
   }
 };
@@ -95,26 +111,45 @@ const Receiversms = async (req, res) => {
 // };
 
 const senderMessage = async (req, res) => {
-  const { userNumber, companionNumber } = req.body;
+  const { userNumber, companionNumber, date, userName, companion, userPlace, roomNumber, specialRequests, clock, time } = req.body;
   // client.messages.create({
   //   body: "Are you able to join with us?",
   //   from: `${userNumber}`,
   //   to: `${companionNumber}`, //filtered data
   // });
 
-  client.messages
-    .create({
-      body: "Are you able to join with us?",
-      from: "+12568297845",
-      to: "+8801700594282", //filtered data
-    })
-    .then(() => {
-      res.send("Initial message sent.");
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error sending initial message.");
-    });
+  try {
+    const companionMessage = `${userName} would like to schedule you for ${date} ${clock} ${time}h at ${userPlace} room:${roomNumber}. Additional note: ${specialRequests} , reply, yes or no.`
+    const userMessage = `You’ve successfully requested for ${companion} on ${date} ${clock} ${time}h at ${userPlace} room:${roomNumber}. Please wait for confirmation.`
+
+    await twilioSMSSend({ number: "+8801700594282", message: companionMessage })
+    await twilioSMSSend({ number: "+8801700594282", message: userMessage })
+
+    res.send("Initial message sent.");
+
+  } catch (error) {
+    res.status(500).send("Error sending initial message.");
+  }
+
+  // client.messages
+  //   .create({
+  //     body: `${userName} would like to schedule you for ${date} ${clock} ${time}h at ${userPlace} room:${roomNumber}. Additional note: ${specialRequests} , reply, yes or no.`,
+  //     from: "+12568297845",
+  //     to: "+8801700594282", //filtered data
+  //   })
+  //   .then(() => {
+  //     client.messages
+  //       .create({
+  //         body: `You’ve successfully requested for ${companion} on ${date} ${clock} ${time}h at ${userPlace} room:${roomNumber}. Please wait for confirmation.`,
+  //         from: "+12568297845",
+  //         to: "+8801700594282", //filtered data
+  //       })
+  //     res.send("Initial message sent.");
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //     res.status(500).send("Error sending initial message.");
+  //   });
 };
 
 const ConfirmationMessage = async (req, res) => {

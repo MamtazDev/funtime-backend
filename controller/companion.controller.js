@@ -72,9 +72,32 @@ const searchCompanion = async (req, res) => {
   }
 };
 
+const deleteCompanion = async(req,res)=>{
+  try {
+    await Companion.findOneAndDelete({ _id: req.params.id })
+    .exec()
+    .then((result) => {
+      res.status(200).send({
+        message: `${result.name} is successfully removed!`,
+        status: 200,
+      });
+    })
+    .catch((err) => {
+      res.send({
+        message: err.message,
+      });
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+    });
+  }
+}
+
 module.exports = {
   addCompanion,
   getAllCompanion,
   changeOnlineStatus,
   searchCompanion,
+  deleteCompanion
 };
