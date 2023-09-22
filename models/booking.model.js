@@ -14,6 +14,10 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    userPhoneNumber:{
+      type: String,
+      required: true,
+    },
     roomNumber: {
       type: String,
       required: true,
@@ -22,6 +26,19 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    date: {
+      type: String,
+      required: true
+    },
+    clock: {
+      type: String,
+      required: true,
+    },
+    time: {
+      type: String,
+      required: true,
+    },
+
     bookedCompanion: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Companion",
