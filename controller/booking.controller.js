@@ -1,15 +1,9 @@
 const Booking = require("../models/booking.model");
 
 const addBooking = async (req, res) => {
-  const { userName, userEmail, userPlace, roomNumber, specialRequests } =
-    req.body;
   try {
     const newBooking = new Booking({
-      userName,
-      userEmail,
-      userPlace,
-      roomNumber,
-      specialRequests,
+      ...req.body,
       bookedCompanion: req.params.id,
     });
     const booking = await newBooking.save();
