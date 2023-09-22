@@ -2,8 +2,12 @@ const twilio = require("twilio");
 const Booking = require("../models/booking.model");
 const Companion = require("../models/companion.model");
 
-const TWILIO_SID = "ACdb46baa1b3ba117b7b79479bdbf072e0";
-const TWILIO_AUTH_TOKEN = "0ee320471d7b08ada5637148f3a97c2d";
+// const TWILIO_SID = "AC40c117c8a0962bc29f69c92ea3869ab7";
+// const TWILIO_AUTH_TOKEN = "2489eb640e4efd40a9514ea23dea4219";
+
+// paid credential
+const TWILIO_SID = "AC513894f19e7c95b99b0858c81eb2d9c3";
+const TWILIO_AUTH_TOKEN = "d9bc0f13a6535eded3e211c52c5be61d";
 
 // const TWILIO_SID = "AC513894f19e7c95b99b0858c81eb2d9c3";
 // const TWILIO_AUTH_TOKEN = "4c3008c9cb83ee686ecb6f2de9524a38";
@@ -13,10 +17,17 @@ const client = new twilio(TWILIO_SID, TWILIO_AUTH_TOKEN);
 const Receiversms = async (req, res) => {
   const { message, companionNumber } = req.body;
 
+  const receivedMessage = req.body.Body;
+  const receivedNumber = req.body.From;
+
+  console.log("From SMS service provider: ", receivedMessage, receivedNumber);
+
+  // console.log("message, companionNumber", message, companionNumber);
+
   const companion = await Companion.findOne({ phone: companionNumber });
-  console.log(companion?._id);
+  // console.log(companion?._id);
   const booking = await Booking.findOne({ bookedCompanion: companion?._id });
-  console.log(booking);
+  // console.log(booking);
   if (booking && message === "yes") {
     booking.status = "Confirmed";
     await booking.save();
@@ -105,8 +116,9 @@ const senderMessage = async (req, res) => {
   client.messages
     .create({
       body: "Are you able to join with us?",
-      from: "+12568297845",
-      to: "+8801700594282", //filtered data
+      from: "+8801620665499",
+      // from: "+12563845752",
+      to: "+8801700594282",
     })
     .then(() => {
       res.send("Initial message sent.");
@@ -122,7 +134,8 @@ const ConfirmationMessage = async (req, res) => {
   client.messages
     .create({
       body: "Are you able to join with us?",
-      from: "+12563845752",
+      from: "8801620665499",
+      // from: "+12563845752",
       to: "+8801700594282",
     })
     .then(() => {
